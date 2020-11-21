@@ -2,6 +2,7 @@ package com.lidapinchuk.task01;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.function.ThrowingRunnable;
 
 import java.util.*;
 
@@ -111,16 +112,26 @@ public class CustomArrayListTest {
         assertEquals("Tom", actualResult);
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testGet_2() {
 
-        filledList.get(-1);
+        assertThrows(IndexOutOfBoundsException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                filledList.get(-1);
+            }
+        });
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testGet_3() {
 
-        filledList.get(10);
+        assertThrows(IndexOutOfBoundsException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                filledList.get(10);
+            }
+        });
     }
 
     @Test
@@ -190,18 +201,26 @@ public class CustomArrayListTest {
         assertEquals("Jane", filledList.get(2));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testAddIndex_2() {
 
-        filledList.add(11, "Jane");
-        assertEquals(10, filledList.size());
+        assertThrows(IndexOutOfBoundsException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                filledList.add(11, "Jane");
+            }
+        });
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testAddIndex_3() {
 
-        filledList.add(-1, "Jane");
-        assertEquals(10, filledList.size());
+        assertThrows(IndexOutOfBoundsException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                filledList.add(-1, "Jane");
+            }
+        });
     }
 
     @Test
@@ -225,6 +244,17 @@ public class CustomArrayListTest {
     }
 
     @Test
+    public void testAddAll_3() {
+
+        assertThrows(NullPointerException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                filledList.addAll(null);
+            }
+        });
+    }
+
+    @Test
     public void testAddAllIndex_1() {
 
         boolean actualResult = filledList.addAll(9, asList("Jane", null));
@@ -245,6 +275,17 @@ public class CustomArrayListTest {
     }
 
     @Test
+    public void testAddAllIndex_3() {
+
+        assertThrows(NullPointerException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                filledList.addAll(0, null);
+            }
+        });
+    }
+
+    @Test
     public void testSet_1() {
 
         String actualResult = filledList.set(9, "Jane");
@@ -254,22 +295,26 @@ public class CustomArrayListTest {
         assertEquals("Jane", filledList.get(9));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testSet_2() {
 
-        String actualResult = filledList.set(9, "Jane");
-
-        filledList.set(10, "Jane");
-        assertEquals(10, filledList.size());
+        assertThrows(IndexOutOfBoundsException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                filledList.set(10, "Jane");
+            }
+        });
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testSet_3() {
 
-        String actualResult = filledList.set(9, "Jane");
-
-        filledList.set(-1, "Jane");
-        assertEquals(10, filledList.size());
+        assertThrows(IndexOutOfBoundsException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                filledList.set(-1, "Jane");
+            }
+        });
     }
 
     @Test
@@ -310,18 +355,26 @@ public class CustomArrayListTest {
         assertEquals(9, filledList.size());
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testRemoveByIndex_2() {
 
-        filledList.remove(10);
-        assertEquals(10, filledList.size());
+        assertThrows(IndexOutOfBoundsException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                filledList.remove(10);
+            }
+        });
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testRemoveByIndex_3() {
 
-        filledList.remove(-1);
-        assertEquals(10, filledList.size());
+        assertThrows(IndexOutOfBoundsException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                filledList.remove(-1);
+            }
+        });
     }
 
     @Test
@@ -429,22 +482,37 @@ public class CustomArrayListTest {
         assertEquals("Anna", actualResult.get(2));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testSubList_2() {
 
-        filledList.subList(2, 1);
+        assertThrows(IndexOutOfBoundsException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                filledList.subList(2, 1);
+            }
+        });
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testSubList_3() {
 
-        filledList.subList(-1, 2);
+        assertThrows(IndexOutOfBoundsException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                filledList.subList(-1, 2);
+            }
+        });
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testSubList_4() {
 
-        filledList.subList(2, 11);
+        assertThrows(IndexOutOfBoundsException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                filledList.subList(2, 11);
+            }
+        });
     }
 
     @Test
@@ -484,24 +552,34 @@ public class CustomArrayListTest {
         assertEquals("Anna", listIterator.next());
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void testIteratorNext_2() {
 
-        Iterator<String> listIterator = filledList.iterator();
+        final Iterator<String> listIterator = filledList.iterator();
 
         for (int i = 0; i < 10; i++) {
             listIterator.next();
         }
 
-        listIterator.next();
+        assertThrows(NoSuchElementException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                listIterator.next();
+            }
+        });
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void testIteratorNext_3() {
 
-        Iterator<String> listIterator = emptyList.iterator();
+        final Iterator<String> listIterator = emptyList.iterator();
 
-        listIterator.next();
+        assertThrows(NoSuchElementException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                listIterator.next();
+            }
+        });
     }
 
     @Test
@@ -522,12 +600,17 @@ public class CustomArrayListTest {
         assertTrue(listIterator.hasPrevious());
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void testIteratorPrevious_1() {
 
-        ListIterator<String> listIterator = filledList.listIterator();
+        final ListIterator<String> listIterator = filledList.listIterator();
 
-        listIterator.previous();
+        assertThrows(NoSuchElementException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                listIterator.previous();
+            }
+        });
     }
 
     @Test
@@ -566,12 +649,17 @@ public class CustomArrayListTest {
         assertEquals("James", filledList.get(0));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testIteratorSet_1() {
 
-        ListIterator<String> listIterator = filledList.listIterator();
+        final ListIterator<String> listIterator = filledList.listIterator();
 
-        listIterator.set("Jane");
+        assertThrows(IllegalStateException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                listIterator.set("Jane");
+            }
+        });
     }
 
     @Test
@@ -585,12 +673,17 @@ public class CustomArrayListTest {
         assertEquals("Jane", filledList.get(0));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testIteratorRemove_1() {
 
-        ListIterator<String> listIterator = filledList.listIterator();
+        final ListIterator<String> listIterator = filledList.listIterator();
 
-        listIterator.remove();
+        assertThrows(IllegalStateException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                listIterator.remove();
+            }
+        });
     }
 
     @Test

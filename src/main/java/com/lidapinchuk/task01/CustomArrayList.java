@@ -2,6 +2,7 @@ package com.lidapinchuk.task01;
 
 import java.util.*;
 
+import static com.lidapinchuk.task01.constants.ExceptionConstants.*;
 import static java.lang.String.format;
 import static java.util.Arrays.copyOf;
 import static java.util.Arrays.copyOfRange;
@@ -78,14 +79,14 @@ public class CustomArrayList<T> implements List<T> {
     private void checkBoundsExclusively(int index) {
 
         if (index < 0 || index >= actualSize) {
-            throw new IndexOutOfBoundsException(format("Index %d is out of list bounds", index));
+            throw new IndexOutOfBoundsException(format(INDEX_OUT_OF_BOUNDS_MESSAGE, index));
         }
     }
 
     private void checkBoundsInclusively(int index) {
 
         if (index < 0 || index > actualSize) {
-            throw new IndexOutOfBoundsException(format("Index %d is out of list bounds", index));
+            throw new IndexOutOfBoundsException(format(INDEX_OUT_OF_BOUNDS_MESSAGE, index));
         }
     }
 
@@ -348,11 +349,11 @@ public class CustomArrayList<T> implements List<T> {
 
     private void checkSubListIndexes(int fromIndex, int toIndex) {
         if (fromIndex < 0) {
-            throw new IndexOutOfBoundsException(format("Index %d is out of list bounds", fromIndex));
+            throw new IndexOutOfBoundsException(format(INDEX_OUT_OF_BOUNDS_MESSAGE, fromIndex));
         } else if (toIndex > actualSize) {
-            throw new IndexOutOfBoundsException(format("Index %d is out of list bounds", toIndex));
+            throw new IndexOutOfBoundsException(format(INDEX_OUT_OF_BOUNDS_MESSAGE, toIndex));
         } else if (fromIndex > toIndex) {
-            throw new IndexOutOfBoundsException(format("fromIndex %d is bigger than toIndex %d", fromIndex, toIndex));
+            throw new IndexOutOfBoundsException(format(INVALID_INDEXES_MESSAGE, fromIndex, toIndex));
         }
     }
 
@@ -385,7 +386,7 @@ public class CustomArrayList<T> implements List<T> {
         @Override
         public T next() {
             if (currentIndex > actualSize - 1) {
-                throw new NoSuchElementException(format("No list element for iterator on position %d", currentIndex));
+                throw new NoSuchElementException(format(NO_SUCH_ELEMENT_MESSAGE, currentIndex));
             }
             previousIndex = currentIndex;
             currentIndex++;
@@ -400,7 +401,7 @@ public class CustomArrayList<T> implements List<T> {
         @Override
         public T previous() {
             if (currentIndex == 0) {
-                throw new NoSuchElementException(format("No list element for iterator on position %d", currentIndex));
+                throw new NoSuchElementException(format(NO_SUCH_ELEMENT_MESSAGE, currentIndex));
             }
             previousIndex = currentIndex;
             currentIndex--;
@@ -420,7 +421,7 @@ public class CustomArrayList<T> implements List<T> {
         @Override
         public void remove() {
             if (previousIndex == -1) {
-                throw new IllegalStateException("'next' or 'previous' operation should be called before that");
+                throw new IllegalStateException(ITERATOR_ILLEGAL_STATE_MESSAGE);
             }
 
             CustomArrayList.this.remove(previousIndex);
@@ -431,7 +432,7 @@ public class CustomArrayList<T> implements List<T> {
         @Override
         public void set(T t) {
             if (previousIndex == -1) {
-                throw new IllegalStateException("'next' or 'previous' operation should be called before that");
+                throw new IllegalStateException(ITERATOR_ILLEGAL_STATE_MESSAGE);
             }
 
             CustomArrayList.this.set(previousIndex, t);
