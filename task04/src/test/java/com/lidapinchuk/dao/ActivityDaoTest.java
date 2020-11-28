@@ -50,6 +50,8 @@ public class ActivityDaoTest {
         assertNotNull(activity.getInstId());
         assertTrue(activities.contains(activity));
         assertEquals(initialActivitiesSize + 1, activities.size());
+
+        activityDao.deleteActivityById(activity.getInstId());
     }
 
     @Test
@@ -78,6 +80,8 @@ public class ActivityDaoTest {
         assertEquals(activity, updatedActivity);
         assertEquals(initialActivitiesSize, activities.size());
         assertEquals(activity.getBuilding().getInstId(), updatedActivity.getBuilding().getInstId());
+
+        activityDao.deleteActivityById(activity.getInstId());
     }
 
     @Test

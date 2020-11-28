@@ -2,6 +2,7 @@ package com.lidapinchuk.util;
 
 import lombok.SneakyThrows;
 import org.apache.ibatis.jdbc.ScriptRunner;
+import org.hibernate.Session;
 import org.hibernate.internal.SessionImpl;
 
 import java.io.BufferedReader;
@@ -13,17 +14,27 @@ public class DatabaseUtil {
     @SneakyThrows
     public static void initializeDatabase() {
 
-        ScriptRunner scriptRunner = new ScriptRunner(((SessionImpl) HibernateFactory.getSessionFactory().openSession()).connection());
+        Session session = HibernateFactory.getSessionFactory().openSession();
+
+        ScriptRunner scriptRunner = new ScriptRunner(((SessionImpl) session).connection());
+        scriptRunner.setSendFullScript(true);
         Reader reader = new BufferedReader(new FileReader("src/test/resources/db/db_creation.sql"));
         scriptRunner.runScript(reader);
+
+        session.close();
     }
 
     @SneakyThrows
     public static void fillDatabase() {
 
-        ScriptRunner scriptRunner = new ScriptRunner(((SessionImpl) HibernateFactory.getSessionFactory().openSession()).connection());
+        Session session = HibernateFactory.getSessionFactory().openSession();
+
+        ScriptRunner scriptRunner = new ScriptRunner(((SessionImpl) session).connection());
+        scriptRunner.setSendFullScript(true);
         Reader reader = new BufferedReader(new FileReader("src/test/resources/db/db_filling.sql"));
         scriptRunner.runScript(reader);
+
+        session.close();
     }
 
 }

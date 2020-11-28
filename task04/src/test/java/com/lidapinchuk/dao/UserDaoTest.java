@@ -47,6 +47,8 @@ public class UserDaoTest {
         assertNotNull(user.getInstId());
         assertTrue(users.contains(user));
         assertEquals(initialUsersSize + 1, users.size());
+
+        userDao.deleteUserById(user.getInstId());
     }
 
     @Test
@@ -75,6 +77,8 @@ public class UserDaoTest {
 
         assertEquals(user, updatedUser);
         assertEquals(initialUsersSize, users.size());
+
+        userDao.deleteUserById(user.getInstId());
     }
 
     @Test

@@ -51,6 +51,8 @@ public class ReportDaoTest {
         assertNotNull(report.getInstId());
         assertTrue(reports.contains(report));
         assertEquals(initialReportsSize + 1, reports.size());
+
+        reportDao.deleteReportById(report.getInstId());
     }
 
     @Test
@@ -78,6 +80,8 @@ public class ReportDaoTest {
         assertEquals(report, updatedReport);
         assertEquals(initialReportsSize, reports.size());
         assertEquals(report.getUser().getInstId(), updatedReport.getUser().getInstId());
+
+        reportDao.deleteReportById(report.getInstId());
     }
 
     @Test

@@ -49,6 +49,8 @@ public class BuildingDaoTest {
         assertNotNull(building.getInstId());
         assertTrue(buildings.contains(building));
         assertEquals(initialBuildingsSize + 1, buildings.size());
+
+        buildingDao.deleteBuildingById(building.getInstId());
     }
 
     @Test
@@ -73,6 +75,8 @@ public class BuildingDaoTest {
         assertEquals(building, updatedBuilding);
         assertEquals(initialBuildingsSize, buildings.size());
         assertEquals(building.getReport().getInstId(), updatedBuilding.getReport().getInstId());
+
+        buildingDao.deleteBuildingById(building.getInstId());
     }
 
     @Test

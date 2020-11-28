@@ -47,6 +47,8 @@ public class MaterialDaoTest {
         assertNotNull(material.getInstId());
         assertTrue(materials.contains(material));
         assertEquals(initialMaterialsSize + 1, materials.size());
+
+        materialDao.deleteMaterialById(material.getInstId());
     }
 
     @Test
@@ -74,6 +76,8 @@ public class MaterialDaoTest {
 
         assertEquals(material, updatedMaterial);
         assertEquals(initialMaterialsSize, materials.size());
+
+        materialDao.deleteMaterialById(material.getInstId());
     }
 
     @Test
