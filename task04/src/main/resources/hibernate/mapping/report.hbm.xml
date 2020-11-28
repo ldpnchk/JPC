@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.lidapinchuk.model.Report" table="report">
+
+        <id name="instId" type="long" column="inst_id">
+            <generator class="increment"/>
+        </id>
+
+        <property name="reportName" column="report_name" type="string"/>
+        <property name="price" column="price" type="double"/>
+        <property name="orderDate" column="order_date" type="date"/>
+
+        <many-to-one name="user" column="user_id" class="com.lidapinchuk.model.User"/>
+    </class>
+</hibernate-mapping>

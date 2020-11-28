@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.lidapinchuk.model.Building" table="building">
+
+        <id name="instId" type="long" column="inst_id">
+            <generator class="increment"/>
+        </id>
+
+        <property name="buildingName" column="building_name" type="string"/>
+        <property name="isActive" column="is_active" type="boolean"/>
+
+        <many-to-one name="report" column="report_id" class="com.lidapinchuk.model.Report"/>
+    </class>
+</hibernate-mapping>

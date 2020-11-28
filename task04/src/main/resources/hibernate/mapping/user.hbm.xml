@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.lidapinchuk.model.User" table="users">
+
+        <id name="instId" type="long" column="inst_id">
+            <generator class="increment"/>
+        </id>
+
+        <property name="userName" column="user_name" type="string"/>
+        <property name="lastName" column="last_name" type="string"/>
+        <property name="email" column="email" type="string"/>
+        <property name="emailBackup" column="email_backup" type="string"/>
+        <property name="TN" column="TN" type="string"/>
+        <property name="TNBackup" column="TN_backup" type="string"/>
+    </class>
+</hibernate-mapping>

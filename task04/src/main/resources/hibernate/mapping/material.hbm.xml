@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.lidapinchuk.model.Material" table="material">
+
+        <id name="instId" type="long" column="inst_id">
+            <generator class="increment"/>
+        </id>
+
+        <property name="material" column="material" type="string"/>
+        <property name="price" column="price" type="double"/>
+        <property name="supplier" column="supplier" type="string"/>
+        <property name="measurement" column="measurement" type="string"/>
+        <property name="balance" column="balance" type="string"/>
+    </class>
+</hibernate-mapping>
