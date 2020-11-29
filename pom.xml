@@ -11,8 +11,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>task01</module>
-        <module>task04</module>
+        <module>custom-list</module>
+        <module>hibernate</module>
+        <module>spring-jdbc</module>
     </modules>
 
 </project>
