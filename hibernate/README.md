@@ -11,4 +11,4 @@ Database configuration:
 Running tests:
 1. Go to the base project directory
 2. Open a console and run the following command:
-mvn -pl task04 clean test
+mvn -pl hibernate clean test
