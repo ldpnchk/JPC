@@ -26,8 +26,7 @@ public class ActivityDaoImpl implements ActivityDao {
         log.info("'createActivity' invoked with activity: {}", activity);
 
         Activity createdActivity = GeneralDao.getInstance().performOperation(session -> {
-            Long newId = (Long) session.save(activity);
-            activity.setInstId(newId);
+            session.persist(activity);
             return activity;
         });
 
@@ -36,17 +35,11 @@ public class ActivityDaoImpl implements ActivityDao {
     }
 
     @Override
-    public Activity updateActivity(Activity newActivity) {
-        log.info("'updateActivity' invoked with newActivity: {}", newActivity);
+    public Activity updateActivity(Activity activity) {
+        log.info("'updateActivity' invoked with activity: {}", activity);
 
         Activity updatedActivity = GeneralDao.getInstance().performOperation(session -> {
-            Activity activity = session.get(Activity.class, newActivity.getInstId());
-            activity.setWorkName(newActivity.getWorkName())
-                    .setMeasurement(newActivity.getMeasurement())
-                    .setPrice(newActivity.getPrice())
-                    .setAmount(newActivity.getAmount())
-                    .setBuilding(newActivity.getBuilding());
-            session.update(activity);
+            session.merge(activity);
             return activity;
         });
 
@@ -61,7 +54,7 @@ public class ActivityDaoImpl implements ActivityDao {
 
         GeneralDao.getInstance().performOperation(session -> {
             Activity activity = session.get(Activity.class, activityId);
-            session.delete(activity);
+            session.remove(activity);
         });
     }
 

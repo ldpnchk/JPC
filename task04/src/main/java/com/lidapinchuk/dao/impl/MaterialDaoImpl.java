@@ -26,8 +26,7 @@ public class MaterialDaoImpl implements MaterialDao {
         log.info("'createActivity' invoked with material: {}", material);
 
         Material createdMaterial = GeneralDao.getInstance().performOperation(session -> {
-            Long newId = (Long) session.save(material);
-            material.setInstId(newId);
+            session.persist(material);
             return material;
         });
 
@@ -36,17 +35,11 @@ public class MaterialDaoImpl implements MaterialDao {
     }
 
     @Override
-    public Material updateMaterial(Material newMaterial) {
-        log.info("'updateActivity' invoked with newMaterial: {}", newMaterial);
+    public Material updateMaterial(Material material) {
+        log.info("'updateActivity' invoked with material: {}", material);
 
         Material updatedMaterial = GeneralDao.getInstance().performOperation(session -> {
-            Material material = session.get(Material.class, newMaterial.getInstId());
-            material.setMaterial(newMaterial.getMaterial())
-                    .setPrice(newMaterial.getPrice())
-                    .setSupplier(newMaterial.getSupplier())
-                    .setMeasurement(newMaterial.getMeasurement())
-                    .setBalance(newMaterial.getBalance());
-            session.update(material);
+            session.merge(material);
             return material;
         });
 
@@ -60,7 +53,7 @@ public class MaterialDaoImpl implements MaterialDao {
 
         GeneralDao.getInstance().performOperation(session -> {
             Material material = session.get(Material.class, materialId);
-            session.delete(material);
+            session.remove(material);
         });
     }
 

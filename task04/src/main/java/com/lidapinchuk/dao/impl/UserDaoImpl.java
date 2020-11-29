@@ -27,8 +27,7 @@ public class UserDaoImpl implements UserDao {
         log.info("'createActivity' invoked with user: {}", user);
 
         User createdUser = GeneralDao.getInstance().performOperation(session -> {
-            Long newId = (Long) session.save(user);
-            user.setInstId(newId);
+            session.persist(user);
             return user;
         });
 
@@ -37,17 +36,10 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User updateUser(User newUser) {
-        log.info("'updateActivity' invoked with newUser: {}", newUser);
+    public User updateUser(User user) {
+        log.info("'updateActivity' invoked with user: {}", user);
 
         User updatedUser = GeneralDao.getInstance().performOperation(session -> {
-            User user = session.get(User.class, newUser.getInstId());
-            user.setUserName(newUser.getUserName())
-                    .setLastName(newUser.getLastName())
-                    .setEmail(newUser.getEmail())
-                    .setEmailBackup(newUser.getEmailBackup())
-                    .setTN(newUser.getTN())
-                    .setTNBackup(newUser.getTNBackup());
             session.update(user);
             return user;
         });
@@ -62,7 +54,7 @@ public class UserDaoImpl implements UserDao {
 
         GeneralDao.getInstance().performOperation(session -> {
             User user = session.get(User.class, userId);
-            session.delete(user);
+            session.remove(user);
         });
     }
 

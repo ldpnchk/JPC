@@ -36,8 +36,7 @@ public class ReportDaoImpl implements ReportDao {
         log.info("'createActivity' invoked with report: {}", report);
 
         Report createdReport = GeneralDao.getInstance().performOperation(session -> {
-            Long newId = (Long) session.save(report);
-            report.setInstId(newId);
+            session.persist(report);
             return report;
         });
 
@@ -46,15 +45,10 @@ public class ReportDaoImpl implements ReportDao {
     }
 
     @Override
-    public Report updateReport(Report newReport) {
-        log.info("'updateActivity' invoked with newReport: {}", newReport);
+    public Report updateReport(Report report) {
+        log.info("'updateActivity' invoked with report: {}", report);
 
         Report updatedReport = GeneralDao.getInstance().performOperation(session -> {
-            Report report = session.get(Report.class, newReport.getInstId());
-            report.setReportName(newReport.getReportName())
-                    .setPrice(newReport.getPrice())
-                    .setOrderDate(newReport.getOrderDate())
-                    .setUser(newReport.getUser());
             session.update(report);
             return report;
         });
@@ -69,7 +63,7 @@ public class ReportDaoImpl implements ReportDao {
 
         GeneralDao.getInstance().performOperation(session -> {
             Report report = session.get(Report.class, reportId);
-            session.delete(report);
+            session.remove(report);
         });
     }
 

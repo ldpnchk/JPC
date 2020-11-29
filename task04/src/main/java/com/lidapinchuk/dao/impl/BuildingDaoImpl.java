@@ -33,8 +33,7 @@ public class BuildingDaoImpl implements BuildingDao {
         log.info("'createActivity' invoked with building: {}", building);
 
         Building createdBuilding = GeneralDao.getInstance().performOperation(session -> {
-            Long newId = (Long) session.save(building);
-            building.setInstId(newId);
+            session.persist(building);
             return building;
         });
 
@@ -43,14 +42,10 @@ public class BuildingDaoImpl implements BuildingDao {
     }
 
     @Override
-    public Building updateBuilding(Building newBuilding) {
-        log.info("'updateActivity' invoked with newBuilding: {}", newBuilding);
+    public Building updateBuilding(Building building) {
+        log.info("'updateActivity' invoked with building: {}", building);
 
         Building updatedBuilding = GeneralDao.getInstance().performOperation(session -> {
-            Building building = session.get(Building.class, newBuilding.getInstId());
-            building.setBuildingName(newBuilding.getBuildingName())
-                    .setIsActive(newBuilding.getIsActive())
-                    .setReport(newBuilding.getReport());
             session.update(building);
             return building;
         });
@@ -64,16 +59,22 @@ public class BuildingDaoImpl implements BuildingDao {
         log.info("'setBuildingNotActiveIfTotalPriceBiggerThan' invoked with totalPrice: {}", totalPrice);
 
         GeneralDao.getInstance().performOperation(session -> {
-            session.createNativeQuery(
-                    "UPDATE building " +
-                       "SET is_active = false " +
-                       "WHERE inst_id IN " +
-                            "(SELECT building_id " +
-                            "FROM activity " +
-                            "GROUP BY building_id " +
-                            "HAVING SUM(price * amount) > :totalPrice)")
+            Collection<Building> buildings = session
+                    .createNativeQuery(
+                            "SELECT * FROM building " +
+                            "WHERE is_active = true AND inst_id IN " +
+                                "(SELECT building_id " +
+                                "FROM activity " +
+                                "GROUP BY building_id " +
+                                "HAVING SUM(price * amount) > :totalPrice)")
                     .setParameter("totalPrice", totalPrice)
-                    .executeUpdate();
+                    .addEntity(Building.class)
+                    .list();
+
+            buildings.forEach(building -> {
+                building.setIsActive(false);
+                session.update(building);
+            });
         });
     }
 
@@ -83,7 +84,7 @@ public class BuildingDaoImpl implements BuildingDao {
 
         GeneralDao.getInstance().performOperation(session -> {
             Building building = session.get(Building.class, buildingId);
-            session.delete(building);
+            session.remove(building);
         });
     }
 
