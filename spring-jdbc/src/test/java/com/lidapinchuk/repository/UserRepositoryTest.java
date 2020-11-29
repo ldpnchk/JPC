@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { ApplicationConfig.class })
-public class UserDaoTest {
+public class UserRepositoryTest {
 
     @Autowired
     private JdbcUserRepository jdbcUserRepository;
